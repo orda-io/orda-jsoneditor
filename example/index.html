@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orda JSONEditor</title>
+    <link href="./jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="./orda_jsoneditor-dev.js"></script>
+
+    <style type="text/css">
+        body {
+            font: 10.5pt arial;
+            color: #4d4d4d;
+            line-height: 150%;
+            width: 500px;
+            padding-left: 40px;
+        }
+
+        code {
+            background-color: #f5f5f5;
+        }
+
+        #jsoneditor {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div>
+    <input type="text" id="document_key">
+    <button id="openNewEditor">Open Editor in New Window</button>
+</div>
+<script>
+    let prevKey;
+    if (!prevKey) {
+        document.getElementById('document_key').value = 'doc-' + new Date().toISOString().slice(0, 10).replace(/-/g, "");
+    }
+
+    function openNewEditor() {
+        prevKey = document.getElementById('document_key').value;
+        const child = window.open(`./editing.html?document_key=${prevKey}`, "_blank", "width=520,height=520")
+        child.document.title = `JSONEditor | ${prevKey}`;
+        document.getElementById('document_key').value = prevKey;
+    }
+
+    document.getElementById('openNewEditor').onclick = openNewEditor
+</script>
+</body>
+</html>

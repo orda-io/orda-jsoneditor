@@ -1,0 +1,48 @@
+<html lang="en">
+<head>
+    <meta charset="en">
+    <link href="./jsoneditor.css" rel="stylesheet" type="text/css">
+    <script src="./orda_jsoneditor-dev.js"></script>
+
+    <style type="text/css">
+        body {
+            font: 10.5pt arial;
+            color: #4d4d4d;
+            line-height: 150%;
+            width: 500px;
+        }
+
+        code {
+            background-color: #f5f5f5;
+        }
+
+        #jsoneditor {
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<form>
+    <div id="jsoneditor">
+    </div>
+</form>
+
+<script>
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    const doc_key = getParameterByName('document_key');
+    const container = document.getElementById('jsoneditor');
+    const conf = new orda_jsoneditor.ClientConfig('jsoneditor', orda_jsoneditor.SyncType.REALTIME, "http://127.0.0.1:29862", "ws://127.0.0.1:18881/mqtt");
+    const client = new orda_jsoneditor.Client(conf, doc_key + '-client');
+    const editor = new orda_jsoneditor.OrdaJSONEditor(client, doc_key, container);
+
+</script>
+</body>
+</html>
